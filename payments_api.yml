@@ -1,0 +1,150 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice Payments
+  description: Python + Django + MongoDB
+  license:
+    name: Software Architecture 2019-I
+host: 192.168.99.101:8000
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /payments-api/company_payments/:
+    post:
+      summary: Creates a new company payment
+      operationId: createCompanyPayment
+      parameters:
+        - name: companyPaymentData
+          in: body
+          required: true
+          description: CompanyPayment Object
+          schema:
+            $ref: '#/definitions/ExcursionInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /excursions/get:
+    get:
+      summary: Returns all excursions
+      operationId: getAllExcursions
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+  /excursions/get_by_id:
+    get:
+      summary: Returns a given excursions
+      operationId: getAnExcursion
+      parameters:
+        - name: id
+          in: body
+          required: true
+          description: Excursion Object
+          schema:
+            $ref: '#/definitions/ExcursionInput'
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+  /excursions/edit:
+    put:
+      summary: Edits a given excursions
+      operationId: editAnExcursion
+      parameters:
+        - name: excursionData
+          in: body
+          required: true
+          description: Excursion Object
+          schema:
+            $ref: '#/definitions/ExcursionInput'
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+  /packages/create:
+    post:
+      summary: Creates a new package
+      operationId: createPackage
+      parameters:
+        - name: packageData
+          in: body
+          required: true
+          description: Excursion Object
+          schema:
+            $ref: '#/definitions/PackageInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /packages/get:
+    get:
+      summary: Returns all packages
+      operationId: getAllPackages
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+  /packages/get_by_id:
+    get:
+      summary: Returns a given package
+      operationId: getAPackage
+      parameters:
+        - name: id
+          in: body
+          required: true
+          description: Package Object
+          schema:
+            $ref: '#/definitions/PackageInput'
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+  /packages/edit:
+    put:
+      summary: Edits a given package
+      operationId: editAPackage
+      parameters:
+        - name: packageData
+          in: body
+          required: true
+          description: Excursion Object
+          schema:
+            $ref: '#/definitions/PackageInput'
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+definitions:
+
+  PackageInput:
+    type: object
+    properties:
+      name:
+        type: string
+      credits:
+        type: integer
+  ExcursionInput:
+      type: object
+      properties:
+        name:
+          type: string
+        credits:
+          type: integer
