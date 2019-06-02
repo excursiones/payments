@@ -1,14 +1,13 @@
-version: "2.1"
-
+version: "2"
 volumes:
   data-db:
-
+  payments:
 services:
-  payments_db:
+  paymentsdb:
     image: mongo
     restart: always
     volumes:
-      - ./data-db:/data/db
+      - 'data-db:/data/db'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mongoadmin
@@ -16,16 +15,17 @@ services:
     ports:
       - 27017:27017
 
-  payments_ms:
+  paymentsms:
+    build: .
     image: app
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/payments_proj
+      - 'payments:/payments_proj'
     ports:
       - 8000:8000
     links:
-      - payments_db
+      - paymentsdb
     depends_on:
       - migration
 
@@ -34,20 +34,19 @@ services:
     image: app
     command: python manage.py migrate
     volumes:
-      - .:/payments_proj
+      - 'payments:/payments_proj'
     links:
-      - payments_db
+      - paymentsdb
     depends_on:
-      - make_migrations
+      - makemigrations
 
-  make_migrations:
+  makemigrations:
     build: .
     image: app
-    command: python manage.py makemigrations
+    command: 'python manage.py makemigrations'
     volumes:
-      - .:/payments_proj
+      - 'payments:/payments_proj'
     links:
-      - payments_db
+      - paymentsdb
     depends_on:
-      - payments_db
-
+      - paymentsdb

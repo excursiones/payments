@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': True,
         'NAME': 'payments_db',
-        'HOST': 'payments_db',
+        'HOST': 'paymentsdb',
         'PORT': 27017,
         'USER': 'root',
         'PASSWORD': 'mongoadmin',
